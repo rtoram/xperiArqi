@@ -6,8 +6,8 @@
     --primary-light: #e6f3ff;
     --secondary-light: #ffffff;
     --accent-light: #007bff;
-    --text-light: #ffeb3b; /* Amarelo para tema claro */
-    --folder-color: #ff6b6b;
+    --text-light: #1b4a54; /* Azul para tema claro */
+    --folder-color: #545454;
 }
 
 body {
