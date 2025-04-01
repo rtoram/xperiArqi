@@ -10,16 +10,17 @@
 <body class="theme-dark">
     <div id="menu" class="futuristic-menu">
         <h1><i class="fas fa-folder-open"></i> Arquivos</h1>
-        <button id="uploadButton" class="futuristic-btn"><i class="fas fa-upload"></i> Upload</button>
+        <button id="uploadButton" class="futuristic-btn" title="Fazer upload de arquivos"><i class="fas fa-upload"></i> Upload</button>
         <input type="file" id="fileInput" multiple style="display: none;">
-        <button id="createFolder" class="futuristic-btn"><i class="fas fa-folder-plus"></i> Nova Pasta</button>
-        <button id="toggleTheme" class="futuristic-btn"><i class="fas fa-adjust"></i> Tema</button>
+        <button id="createFolder" class="futuristic-btn" title="Criar nova pasta"><i class="fas fa-folder-plus"></i> Nova Pasta</button>
+        <button id="toggleTheme" class="futuristic-btn" title="Alternar entre tema claro e escuro"><i class="fas fa-adjust"></i> Tema</button>
+        <button id="helpButton" class="futuristic-btn" title="Ver instruções de uso"><i class="fas fa-question"></i> Ajuda</button>
     </div>
 
     <div id="main-content" class="futuristic-container">
         <div id="fileListContainer">
             <div class="path-breadcrumbs futuristic-breadcrumbs">
-                <span onclick="navigateToRoot()">Raiz</span>
+                <span onclick="navigateToRoot()" title="Voltar para a raiz">Raiz</span>
                 <span id="currentPath"></span>
             </div>
             <div class="content-wrapper">
@@ -31,13 +32,30 @@
 
     <div id="modal" class="futuristic-modal">
         <div class="modal-content">
-            <span id="modalClose" class="modal-close">×</span>
+            <span id="modalClose" class="modal-close" title="Fechar">×</span>
             <h2 id="modalTitle"></h2>
             <input type="text" id="modalInput" class="futuristic-input" placeholder="Digite aqui...">
             <div class="modal-buttons">
-                <button id="modalConfirm" class="futuristic-btn">Confirmar</button>
-                <button id="modalCancel" class="futuristic-btn">Cancelar</button>
+                <button id="modalConfirm" class="futuristic-btn" title="Confirmar ação">Confirmar</button>
+                <button id="modalCancel" class="futuristic-btn" title="Cancelar ação">Cancelar</button>
             </div>
+        </div>
+    </div>
+
+    <div id="helpModal" class="futuristic-modal">
+        <div class="modal-content">
+            <span id="helpModalClose" class="modal-close" title="Fechar">×</span>
+            <h2>Instruções de Uso</h2>
+            <p>
+                - <strong>Upload:</strong> Clique para adicionar arquivos.<br>
+                - <strong>Nova Pasta:</strong> Crie uma nova pasta.<br>
+                - <strong>Tema:</strong> Alterne entre claro e escuro.<br>
+                - <strong>Download:</strong> Baixe um arquivo.<br>
+                - <strong>Excluir:</strong> Remova um arquivo ou pasta.<br>
+                - <strong>Renomear:</strong> Altere o nome de um arquivo ou pasta.<br>
+                - <strong>Visualizar:</strong> Veja o conteúdo de um arquivo.<br>
+                - <strong>Navegação:</strong> Clique duas vezes em uma pasta para entrar, ou em "Raiz" para voltar.
+            </p>
         </div>
     </div>
 
