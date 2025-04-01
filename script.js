@@ -11,7 +11,10 @@ const elements = {
     modalInput: document.getElementById('modalInput'),
     modalConfirm: document.getElementById('modalConfirm'),
     modalCancel: document.getElementById('modalCancel'),
-    modalClose: document.getElementById('modalClose')
+    modalClose: document.getElementById('modalClose'),
+    helpButton: document.getElementById('helpButton'),
+    helpModal: document.getElementById('helpModal'),
+    helpModalClose: document.getElementById('helpModalClose')
 };
 
 let filesArray = JSON.parse(localStorage.getItem('filesArray')) || [];
@@ -31,6 +34,8 @@ function addEventListeners() {
     elements.modalClose.addEventListener('click', closeModal);
     elements.modalCancel.addEventListener('click', closeModal);
     elements.modalConfirm.addEventListener('click', handleModalConfirm);
+    elements.helpButton.addEventListener('click', showHelpModal);
+    elements.helpModalClose.addEventListener('click', closeHelpModal);
 }
 
 function handleFileUpload(e) {
@@ -74,9 +79,10 @@ function renderFiles() {
         li.innerHTML = `
             <span>${file.name} (${(file.size / 1024).toFixed(2)} KB) - ${file.date}</span>
             <div class="buttons">
-                <button class="download-btn"><i class="fas fa-download"></i></button>
-                <button class="delete-btn"><i class="fas fa-trash"></i></button>
-                <button class="rename-btn"><i class="fas fa-edit"></i></button>
+                <button class="download-btn" title="Baixar arquivo"><i class="fas fa-download"></i></button>
+                <button class="delete-btn" title="Excluir arquivo ou pasta"><i class="fas fa-trash"></i></button>
+                <button class="rename-btn" title="Renomear arquivo ou pasta"><i class="fas fa-edit"></i></button>
+                <button class="view-btn" title="Visualizar arquivo"><i class="fas fa-eye"></i></button>
             </div>
         `;
 
@@ -90,6 +96,7 @@ function renderFiles() {
         li.querySelector('.download-btn').addEventListener('click', () => downloadFile(file.name, file.path));
         li.querySelector('.delete-btn').addEventListener('click', () => deleteFile(file.name, file.path));
         li.querySelector('.rename-btn').addEventListener('click', () => showRenameModal(file.name, file.path));
+        li.querySelector('.view-btn').addEventListener('click', () => viewFile(file.name, file.path));
     });
 }
 
@@ -166,6 +173,12 @@ function navigateToRoot() {
     renderFiles();
 }
 
+function viewFile(fileName, path) {
+    const file = filesArray.find(f => f.name === fileName && f.path === path);
+    if (!file || !file.content) return;
+    window.open(file.content, '_blank');
+}
+
 function toggleTheme() {
     theme = theme === 'dark' ? 'light' : 'dark';
     localStorage.setItem('theme', theme);
@@ -173,5 +186,23 @@ function toggleTheme() {
 }
 
 function updatePathDisplay() {
-    elements.currentPathSpan.innerHTML = currentPath.map(p => `<span>${p}</span>`).join(' / ');
+    elements.currentPathSpan.innerHTML = currentPath.map(p => 
+        `<span onclick="navigateToPath('${p}')" title="Ir para ${p}">${p}</span>`
+    ).join(' / ');
+}
+
+function navigateToPath(folderName) {
+    const index = currentPath.indexOf(folderName);
+    if (index !== -1) {
+        currentPath = currentPath.slice(0, index + 1);
+        renderFiles();
+    }
+}
+
+function showHelpModal() {
+    elements.helpModal.style.display = 'block';
+}
+
+function closeHelpModal() {
+    elements.helpModal.style.display = 'none';
 }
