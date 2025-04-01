@@ -6,7 +6,7 @@
     --primary-light: #e6f3ff;
     --secondary-light: #ffffff;
     --accent-light: #007bff;
-    --text-light: #333333;
+    --text-light: #ffeb3b; /* Amarelo para tema claro */
     --folder-color: #ff6b6b;
 }
 
@@ -106,6 +106,10 @@ body {
     transition: all 0.3s ease;
 }
 
+.theme-light .buttons button {
+    color: var(--accent-light); /* Azul escuro no tema claro */
+}
+
 .buttons button:hover {
     color: white;
     transform: scale(1.2);
@@ -116,6 +120,10 @@ body {
     background: rgba(0, 0, 0, 0.2);
 }
 
+.theme-light .futuristic-breadcrumbs {
+    background: rgba(0, 0, 0, 0.1); /* Mais claro no tema light */
+}
+
 .futuristic-breadcrumbs span {
     cursor: pointer;
     padding: 5px 10px;
@@ -124,6 +132,10 @@ body {
 
 .futuristic-breadcrumbs span:hover {
     background: var(--accent-dark);
+}
+
+.theme-light .futuristic-breadcrumbs span:hover {
+    background: var(--accent-light);
 }
 
 .futuristic-modal {
@@ -149,6 +161,11 @@ body {
     width: 100%;
 }
 
+.theme-light .modal-content {
+    background: var(--secondary-light);
+    color: var(--text-light);
+}
+
 .modal-close {
     float: right;
     font-size: 24px;
@@ -168,6 +185,11 @@ body {
     color: white;
     width: 100%;
     margin: 10px 0;
+}
+
+.theme-light .futuristic-input {
+    background: rgba(0, 0, 0, 0.1);
+    color: var(--text-light);
 }
 
 .modal-buttons {
