@@ -36,6 +36,8 @@ function addEventListeners() {
     elements.modalConfirm.addEventListener('click', handleModalConfirm);
     elements.helpButton.addEventListener('click', showHelpModal);
     elements.helpModalClose.addEventListener('click', closeHelpModal);
+    elements.folderList.addEventListener('dragover', (e) => e.preventDefault());
+    elements.folderList.addEventListener('drop', handleDrop);
 }
 
 function handleFileUpload(e) {
@@ -74,6 +76,7 @@ function renderFiles() {
 
     filtered.forEach(file => {
         const li = document.createElement('li');
+        li.draggable = file.type !== 'folder';
         li.dataset.name = file.name;
         li.dataset.path = file.path;
         li.innerHTML = `
@@ -90,6 +93,10 @@ function renderFiles() {
             li.addEventListener('dblclick', () => navigateToFolder(file));
             elements.folderList.appendChild(li);
         } else {
+            li.addEventListener('dragstart', (e) => {
+                e.dataTransfer.setData('text/plain', file.name);
+                e.dataTransfer.setData('path', file.path);
+            });
             elements.fileList.appendChild(li);
         }
 
@@ -205,4 +212,20 @@ function showHelpModal() {
 
 function closeHelpModal() {
     elements.helpModal.style.display = 'none';
+}
+
+function handleDrop(e) {
+    e.preventDefault();
+    const fileName = e.dataTransfer.getData('text/plain');
+    const oldPath = e.dataTransfer.getData('path');
+    const folderName = e.target.closest('.folder')?.dataset.name;
+
+    if (folderName) {
+        const file = filesArray.find(f => f.name === fileName && f.path === oldPath);
+        if (file && file.type !== 'folder') {
+            file.path = `${currentPath.join('/')}/${folderName}`.replace('//', '/');
+            saveFiles();
+            renderFiles();
+        }
+    }
 }
